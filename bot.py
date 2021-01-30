@@ -13,10 +13,10 @@ bcc = Broadcast(loop=loop)
 app = GraiaMiraiApplication(
     broadcast=bcc,
     connect_info=Session(
-        host="http://localhost:8080",  # 填入 httpapi 服务运行的地址
-        authKey="senbai114514",  # 填入 authKey
-        account=1229868545,  # 你的机器人的 qq 号
-        websocket=True  # Graia 已经可以根据所配置的消息接收的方式来保证消息接收部分的正常运作.
+        host="http://localhost:8080",  # httpapi 服务运行的地址
+        authKey="initAuthKey",  # authKey
+        account=12345678,  # 机器人的 qq 号
+        websocket=True
     ))
 
 lucky_num = {}
@@ -60,6 +60,6 @@ async def group_message_translate(app: GraiaMiraiApplication, group: Group, msg:
             for i in range(0, len(pids)):
                 await app.sendGroupMessage(group, MessageChain.create([Plain(pids[i]), Image.fromLocalFile('tmp_' + str(i) + '.jpg')]))
         except:
-            await app.sendGroupMessage(group, MessageChain.create([Plain('没有返回结果')]))
+            await app.sendGroupMessage(group, MessageChain.create([Plain('搜索失败')]))
 
 app.launch_blocking()
