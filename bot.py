@@ -26,16 +26,14 @@ lucky_num = {}
 async def group_message_translate(app: GraiaMiraiApplication, group: Group, msg: MessageChain, sender: Member):
     Text = msg.get(Plain)[0].text
     firstText = Text.split(' ')[0]
-    if (firstText == "翻译" or firstText == "translate"):
 
+    if (firstText == "翻译" or firstText == "translate"):
         if Text.split(' ')[1][0] == '/':
             deslan = re.search(r'/[A-Za-z\_]*', Text).group(0)[1:]
             originText = re.split(r'/[A-Za-z\_]* ', Text)[1]
             sendMsg = translate(originText, 1, deslan)
-
         else:
             sendMsg = translate(Text[Text.find(' ') + 1:])
-
         await app.sendGroupMessage(group, MessageChain.create([Plain(sendMsg)]))
 
     elif (Text == "今日人品"):
@@ -46,7 +44,6 @@ async def group_message_translate(app: GraiaMiraiApplication, group: Group, msg:
     elif (firstText == "pid"):
         pid = Text.split(' ')[1]
         nums = getImgByPid(pid)
-
         if (nums > 0):
             for i in range(0, nums):
                 await app.sendGroupMessage(group, MessageChain.create([Image.fromLocalFile('tmp_' + str(i) + '.jpg')]))

@@ -17,7 +17,6 @@ def translate(s, flag=0, desLan='zh-CN'):
         res = json.loads(r.text)
         info = res['sentences'][0]['trans']
         return info
-
     except:
         print("error")
         return
@@ -40,17 +39,13 @@ def getImgByPid(s: str, dst='tmp', pageCountMax=5):
         preUrl = desUrl[:desUrl.rfind('.') - 1]
         lastUrl = desUrl[desUrl.rfind('.'):]
         pageCount = content['illust'][s]['pageCount']
-
         for i in range(0, min(pageCount, pageCountMax)):
             desUrl = preUrl + str(i) + lastUrl
             r = requests.get(desUrl, headers=headers)
-
             with open(dst+'_'+str(i)+'.jpg', 'wb') as f:
                 f.write(r.content)
                 f.close()
-
         return min(pageCount, pageCountMax)
-
     except:
         print("error")
         return 0
@@ -70,18 +65,14 @@ def getImgBySearch(s: str, numsOfPic=3):
         r.raise_for_status()
         Datas = json.loads(r.text)['body']['illustManga']['data']
         headers['Referer'] = 'https://www.pixiv.net/'
-
         for i in range(numsOfPic):
             urls.append(Datas[i]['url'])
             pids.append(Datas[i]['id'])
             r = requests.get(urls[i], headers=headers)
-
             with open('tmp_'+str(i)+'.jpg', 'wb') as f:
                 f.write(r.content)
                 f.close()
-
         return pids
-
     except:
         print('error')
         return
